@@ -1,0 +1,42 @@
+#!/usr/bin/env node
+
+var argv = require('minimist')(process.argv.slice(2));
+
+var filepath, snap, maxres;
+
+if (argv._.length != 1) {
+    console.log('No file was provided');
+    process.exit(1);
+} else {
+    filepath = argv._[0];
+}
+
+if (!argv.snap) {
+    snap = false
+} else if (argv.snap === true || argv.snap === false) {
+    snap = argv.snap;
+} else {
+    console.log('--snap is a flag');
+    process.exit(1);
+}
+
+
+if (argv.maxres) {
+    try {
+        maxres = parseFloat(argv.maxres)
+    } catch(err) {
+        console.log(err);
+        process.exit(1);
+    }
+} else {
+    maxres = 0;
+}
+
+var colonel_mercator = require('..'),
+    path = require('path'),
+    filepath = path.resolve(filepath);
+
+colonel_mercator.drill_raster(filepath, maxres, snap, function(err, pixel) {
+  if (err) throw err;
+  console.log(pixel[0])
+});

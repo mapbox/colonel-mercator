@@ -1,0 +1,29 @@
+{
+  "name": "colonel-mercator",
+  "version": "0.0.1",
+  "main": "./index",
+  "engines": {
+    "node": "0.10.31"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mapbox/colonel-mercator.git"
+  },
+  "bin": {
+    "colonel-mercator": "bin/colonel-mercator"
+  },
+  "dependencies": {
+    "mapnik-omnivore": "^6.3.2",
+    "minimist": "^1.1.0",
+    "split": "^0.3.3"
+  },
+  "scripts": {
+    "test": "tape test/*.test.js",
+    "coverage": "istanbul cover tape test/*.test.js && coveralls < ./coverage/lcov.info"
+  },
+  "devDependencies": {
+    "coveralls": "^2.11.2",
+    "istanbul": "^0.3.7",
+    "tape": "^3.5.0"
+  }
+}
