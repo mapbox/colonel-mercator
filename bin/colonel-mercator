@@ -2,7 +2,7 @@
 
 var argv = require('minimist')(process.argv.slice(2));
 
-var filepath, snap, maxres;
+var filepath, snap, maxres, breaks
 
 if (argv._.length != 1) {
     console.log('No file was provided');
@@ -32,11 +32,20 @@ if (argv.maxres) {
     maxres = 0;
 }
 
+if (argv.breaks) {
+    try {
+        breaks = JSON.parse(argv.breaks)
+    } catch(err) {
+        console.log(err);
+        process.exit(1);
+    }
+}
+
 var colonel_mercator = require('..'),
     path = require('path'),
     filepath = path.resolve(filepath);
 
-colonel_mercator.drill_raster(filepath, maxres, snap, function(err, pixel) {
+colonel_mercator.drill_raster(filepath, maxres, snap, breaks, function(err, pixel) {
   if (err) throw err;
-  console.log(pixel[0])
+  console.log(pixel)
 });
