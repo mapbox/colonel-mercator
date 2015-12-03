@@ -2,50 +2,86 @@
 
 var argv = require('minimist')(process.argv.slice(2));
 
-var filepath, snap, maxres, breaks
-
-if (argv._.length != 1) {
-    console.log('No file was provided');
-    process.exit(1);
-} else {
-    filepath = argv._[0];
-}
-
-if (!argv.snap) {
-    snap = false
-} else if (argv.snap === true || argv.snap === false) {
-    snap = argv.snap;
-} else {
-    console.log('--snap is a flag');
-    process.exit(1);
-}
-
-
-if (argv.maxres) {
-    try {
-        maxres = parseFloat(argv.maxres)
-    } catch(err) {
-        console.log(err);
-        process.exit(1);
-    }
-} else {
-    maxres = 0;
-}
-
-if (argv.breaks) {
-    try {
-        breaks = JSON.parse(argv.breaks)
-    } catch(err) {
-        console.log(err);
-        process.exit(1);
-    }
-}
-
 var colonel_mercator = require('..'),
-    path = require('path'),
-    filepath = path.resolve(filepath);
+    path = require('path');
 
-colonel_mercator.drill_raster(filepath, maxres, snap, breaks, function(err, pixel) {
-  if (err) throw err;
-  console.log(pixel)
-});
+var filepath, snap, maxres, breaks, subcommand, res, zoombreaks, upzoom;
+
+if (argv._[0] != 'resolution' && argv._[0] != 'metatile') {
+    returnError('Invalid subcommand');
+} else {
+    subcommand = argv._[0];
+}
+
+if (subcommand === 'resolution') {
+
+    if (argv._.length != 2) {
+        returnError('Usage: colonel-mercator resolution <file> <opts>');
+    } else {
+        filepath = path.resolve(argv._[1]);
+    }
+
+    if (!argv.snap) {
+        snap = false
+    } else if (argv.snap === true || argv.snap === false) {
+        snap = argv.snap;
+    } else {
+        returnError('--snap is a flag')
+    }
+
+    if (argv.maxres) {
+        try {
+            maxres = parseFloat(argv.maxres)
+        } catch(err) {
+            returnError(err);
+        }
+    } else {
+        maxres = 0;
+    }
+
+    colonel_mercator.drill_raster(filepath, maxres, snap, function(err, pixel) {
+      if (err) returnError(err);
+      console.log(pixel[0])
+    });
+
+} else if (subcommand === 'metatile') {
+    if (argv._.length != 2) {
+        returnError('Usage: colonel-mercator resolution <res> <opts>');
+    } else {
+        try {
+            res = parseFloat(argv._[1]);
+        } catch(err) {
+            returnError(err);
+        }
+    }
+
+        if (argv.zoombreaks) {
+        try {
+            zoombreaks = JSON.parse(argv.zoombreaks);
+        } catch(err) {
+            returnError(err);
+        }
+    } else {
+        zoombreaks = [13, 10, 7, 4];
+    }
+
+    if (argv.upzoom) {
+        try {
+            upzoom = parseInt(argv.upzoom)
+        } catch(err) {
+            returnError(err);
+        }
+    } else {
+        upzoom = 3;
+    }
+
+    colonel_mercator.get_scene_zoom(res, zoombreaks, upzoom, function(err, metatileZoom) {
+        if (err) returnError(err);
+        console.log(JSON.stringify(metatileZoom));
+    });
+}
+
+function returnError(err) {
+    console.log(err);
+    process.exit(1);
+}
