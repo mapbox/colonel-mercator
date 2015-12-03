@@ -8,6 +8,7 @@ module.exports.get_scene_zoom = get_scene_zoom;
 
 function drill_raster(file, maxRes, snapping, callback) {
     mapnikOmnivore.digest(file, function(err, metadata){
+        console.log(JSON.stringify(metadata))
         if (err) return callback(err);
         else {
             mercRes.get_resolution(metadata, maxRes, snapping, function(err, res) {
