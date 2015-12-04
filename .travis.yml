@@ -16,3 +16,7 @@ addons:
 install:
  - npm install
  - npm link
+
+scripts:
+ - npm test
+ - coverage
