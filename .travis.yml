@@ -16,8 +16,6 @@ addons:
 install:
  - npm install
 
-before_script:
- - if [[ ${COVERAGE:-false} != false ]]; then npm run coverage; fi;
-
 script:
  - npm test
+ - npm run coverage
