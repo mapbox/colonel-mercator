@@ -50,7 +50,7 @@ if (subcommand === 'resolution') {
 
 } else if (subcommand === 'metatile') {
     if (argv._.length != 2) {
-        returnError('Usage: colonel-mercator resolution <res> <opts>');
+        returnError('Usage: colonel-mercator metatile <res> <opts>');
     } else {
         try {
             res = parseFloat(argv._[1]);
