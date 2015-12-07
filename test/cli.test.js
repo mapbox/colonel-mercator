@@ -1,34 +1,66 @@
 var tape = require('tape');
 var exec = require('child_process').exec;
 
-tape('[CLI - resolution] Test gets correct resolution', function(assert) {
-    exec('node bin/colonel-mercator resolution test/fixtures/tiny.tif', function(err, stdout, stderr) {
+tape('[CLI - resolution (UTM)] Test gets correct resolution', function(assert) {
+    exec('node bin/colonel-mercator resolution test/fixtures/tiny-utm.tif', function(err, stdout, stderr) {
         assert.error(err, 'Should not error');
         assert.looseEquals(stdout, 3.003153153153153);
         assert.end()
     })
 });
 
-tape('[CLI - resolution] Test gets correct resolution, respects maxres', function(assert) {
-    exec('node bin/colonel-mercator resolution test/fixtures/tiny.tif --maxres 10.2', function(err, stdout, stderr) {
+tape('[CLI - resolution (UTM)] Test gets correct resolution, respects maxres', function(assert) {
+    exec('node bin/colonel-mercator resolution test/fixtures/tiny-utm.tif --maxres 10.2', function(err, stdout, stderr) {
         assert.error(err, 'Should not error');
         assert.looseEquals(stdout, 10.2)
         assert.end()
     })
 });
 
-tape('[CLI - resolution] Test gets correct resolution, ignores maxres if higher', function(assert) {
-    exec('node bin/colonel-mercator resolution test/fixtures/tiny.tif --maxres 1.01', function(err, stdout, stderr) {
+tape('[CLI - resolution (UTM)] Test gets correct resolution, ignores maxres if higher', function(assert) {
+    exec('node bin/colonel-mercator resolution test/fixtures/tiny-utm.tif --maxres 1.01', function(err, stdout, stderr) {
         assert.error(err, 'Should not error');
         assert.looseEquals(stdout, 3.003153153153153);
         assert.end();
     })
 });
 
-tape('[CLI - resolution] Test gets correct resolution, snaps', function(assert) {
-    exec('node bin/colonel-mercator resolution test/fixtures/tiny.tif --snap', function(err, stdout, stderr) {
+tape('[CLI - resolution (UTM)] Test gets correct resolution, snaps', function(assert) {
+    exec('node bin/colonel-mercator resolution test/fixtures/tiny-utm.tif --snap', function(err, stdout, stderr) {
         assert.error(err, 'Should not error');
         assert.looseEquals(stdout, 4.777312278747559);
+        assert.end();
+    })
+});
+
+tape('[CLI - resolution (4326)] Test gets correct resolution', function(assert) {
+    exec('node bin/colonel-mercator resolution test/fixtures/tiny-4326.tif', function(err, stdout, stderr) {
+        assert.error(err, 'Should not error');
+        assert.looseEquals(stdout, 28.362205605213955);
+        assert.end()
+    })
+});
+
+tape('[CLI - resolution (4326)] Test gets correct resolution, respects maxres', function(assert) {
+    exec('node bin/colonel-mercator resolution test/fixtures/tiny-4326.tif --maxres 30.2', function(err, stdout, stderr) {
+        assert.error(err, 'Should not error');
+        assert.looseEquals(stdout, 30.2)
+        assert.end()
+    })
+});
+
+tape('[CLI - resolution (4326)] Test gets correct resolution, ignores maxres if higher', function(assert) {
+    exec('node bin/colonel-mercator resolution test/fixtures/tiny-4326.tif --maxres 1.01', function(err, stdout, stderr) {
+        assert.error(err, 'Should not error');
+        assert.looseEquals(stdout, 28.362205605213955);
+        assert.end();
+    })
+});
+
+tape('[CLI - resolution (4326)] Test gets correct resolution, snaps', function(assert) {
+    exec('node bin/colonel-mercator resolution test/fixtures/tiny-4326.tif --snap', function(err, stdout, stderr) {
+        assert.error(err, 'Should not error');
+        assert.looseEquals(stdout, 38.21849822998047);
         assert.end();
     })
 });
@@ -66,7 +98,7 @@ tape('[CLI - metatile] Test respects zoombreaks in any order', function(assert) 
 });
 
 tape('[CLI - err] Test should error if no subcommand', function(assert) {
-    exec('node bin/colonel-mercator test/fixtures/tiny.tif', function(err, stdout, stderr) {
+    exec('node bin/colonel-mercator test/fixtures/tiny-utm.tif', function(err, stdout, stderr) {
         assert.equals(err.code, 1)
         assert.equals(stderr, 'Invalid subcommand\n');
         assert.end();
@@ -74,7 +106,7 @@ tape('[CLI - err] Test should error if no subcommand', function(assert) {
 });
 
 tape('[CLI - err] Test should error if bad subcommand', function(assert) {
-    exec('node bin/colonel-mercator yomomma test/fixtures/tiny.tif', function(err, stdout, stderr) {
+    exec('node bin/colonel-mercator yomomma test/fixtures/tiny-utm.tif', function(err, stdout, stderr) {
         assert.equals(err.code, 1);
         assert.equals(stderr, 'Invalid subcommand\n');
         assert.end();
