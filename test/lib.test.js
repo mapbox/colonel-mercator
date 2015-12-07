@@ -13,7 +13,7 @@ tape('[LIB - get resolution] Test gets correct resolution', function(assert) {
     var snapping = false;
     merc_res.get_resolution(metadata, maxRes, snapping, function(err, res) {
         assert.error(err);
-        assert.deepLooseEqual(res, [10, 10])
+        assert.deepLooseEqual(res, [10, 10]);
         assert.end();
     });
 });
@@ -45,7 +45,7 @@ tape('[LIB - get resolution] Test gets correct resolution, snaps up', function(a
     var snapping = true;
     merc_res.get_resolution(metadata, maxRes, snapping, function(err, res) {
         assert.error(err);
-        assert.deepLooseEqual(res, [4.777312278747559, 4.777312278747559 ])
+        assert.deepLooseEqual(res, [4.777312278747559, 4.777312278747559 ]);
         assert.end();
     });
 });
@@ -56,7 +56,7 @@ tape('[LIB - get metatile] Test gets correct metatile z', function(assert) {
     var upzoom = 3;
     merc_res.metatile_size(resolution, breakzooms, upzoom, function(err, metatile) {
         assert.error(err);
-        assert.deepLooseEqual(metatile, { thresh: 19.109249114990234, z: 10 })
+        assert.deepLooseEqual(metatile, { thresh: 19.109249114990234, z: 10 });
         assert.end();
     });
 });
@@ -77,7 +77,18 @@ tape('[LIB - get metatile] Throws error if no breakzooms', function(assert) {
     var breakzooms = [];
     var upzoom = 3;
     merc_res.metatile_size(resolution, breakzooms, upzoom, function(err, metatile) {
-        assert.equal(err.message, 'must have at least one zoom break')
+        assert.equal(err.message, 'must have at least one zoom break');
+        assert.end();
+    });
+});
+
+tape('[LIB - get metatile] if over min threshold, return min zoom', function(assert) {
+    var resolution = 1500;
+    var breakzooms = [4, 7, 10, 13];
+    var upzoom = 3;
+    merc_res.metatile_size(resolution, breakzooms, upzoom, function(err, metatile) {
+        assert.error(err);
+        assert.deepLooseEqual(metatile, { thresh: 1222.991943359375, z: 4 })
         assert.end();
     });
 });
