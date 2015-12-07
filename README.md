@@ -2,7 +2,7 @@
 Gets raster pixel resolutions, and optionally snaps them to `mapnik-omnivore` tiling thresholds.
 Also, generates "metatile" zooms - the tile sizes at which a given input resolution would be over a size threshold based on an "upzoom" (the resolution of zoom levels "up")
 
-![colonel](https://cloud.githubusercontent.com/assets/5084513/11637742/fff760d8-9cd7-11e5-94c9-b0d4ed113a55.jpeg)
+![image](https://cloud.githubusercontent.com/assets/5084513/11638138/1058d900-9cda-11e5-9e77-686c4d0e176a.png)
 
 ## Install
 ```
