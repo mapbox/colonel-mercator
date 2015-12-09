@@ -10,7 +10,7 @@
     "url": "git://github.com/mapbox/colonel-mercator.git"
   },
   "bin": {
-    "colonel-mercator": "bin/colonel-mercator"
+    "colonel-mercator": "./bin/colonel-mercator"
   },
   "dependencies": {
     "mapnik-omnivore": "^6.4.0",
