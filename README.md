@@ -1,4 +1,7 @@
 # colonel-mercator
+
+[![Build Status](https://travis-ci.org/mapbox/colonel-mercator.svg)](https://travis-ci.org/mapbox/colonel-mercator)[![Coverage Status](https://coveralls.io/repos/mapbox/colonel-mercator/badge.svg?branch=master&service=github)](https://coveralls.io/github/mapbox/colonel-mercator?branch=master)
+
 Gets raster pixel resolutions, and optionally snaps them to `mapnik-omnivore` tiling thresholds.
 Also, generates "metatile" zooms - the tile sizes at which a given input resolution would be over a size threshold based on an "upzoom" (the resolution of zoom levels "up")
 
