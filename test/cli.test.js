@@ -25,10 +25,10 @@ tape('[CLI - resolution (UTM)] Test gets correct resolution, ignores maxres if h
     })
 });
 
-tape('[CLI - resolution (UTM)] Test gets correct resolution, snaps', function(assert) {
+tape('[CLI - resolution (UTM)] Test gets correct resolution, snaps down (coarser resolution)', function(assert) {
     exec('node bin/colonel-mercator resolution test/fixtures/tiny-utm.tif --snap 0', function(err, stdout, stderr) {
         assert.error(err, 'Should not error');
-        assert.looseEquals(stdout, 4.777312278747559);
+        assert.looseEquals(stdout, 4.777312278847559);
         assert.end();
     })
 });
@@ -57,10 +57,26 @@ tape('[CLI - resolution (4326)] Test gets correct resolution, ignores maxres if 
     })
 });
 
-tape('[CLI - resolution (4326)] Test gets correct resolution, snaps', function(assert) {
+tape('[CLI - resolution (4326)] Test gets correct resolution, snaps down (coarser resolution)', function(assert) {
     exec('node bin/colonel-mercator resolution test/fixtures/tiny-4326.tif --snap 0', function(err, stdout, stderr) {
         assert.error(err, 'Should not error');
-        assert.looseEquals(stdout, 38.21849822998047);
+        assert.looseEquals(stdout, 38.21849823008047);
+        assert.end();
+    })
+});
+
+tape('[CLI - resolution (4326)] Test gets correct resolution, snaps down (finer resolution)', function(assert) {
+    exec('node bin/colonel-mercator resolution test/fixtures/tiny-4326.tif --snap 1', function(err, stdout, stderr) {
+        assert.error(err, 'Should not error');
+        assert.looseEquals(stdout, 19.109249115090233);
+        assert.end();
+    })
+});
+
+tape('[CLI - resolution (4326)] Test gets correct resolution, snaps down with 0.5 threshold (finer resolution)', function(assert) {
+    exec('node bin/colonel-mercator resolution test/fixtures/tiny-4326.tif --snap 0.5', function(err, stdout, stderr) {
+        assert.error(err, 'Should not error');
+        assert.looseEquals(stdout, 19.109249115090233);
         assert.end();
     })
 });

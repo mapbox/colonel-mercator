@@ -83,7 +83,7 @@ if (subcommand === 'resolution') {
 
     colonel_mercator.get_scene_zoom(res, zoombreaks, upzoom, function(err, metatileZoom) {
         if (err) returnError(err);
-        console.log(JSON.stringify(metatileZoom));
+        process.stdout.write(JSON.stringify(metatileZoom));
     });
 }
 
