@@ -6,7 +6,8 @@ var argv = require('minimist')(
         'default': {
             snap: false,
             maxres: 0,
-            upzoom: 3
+            upzoom: 3,
+            zoombreaks: '[13, 10, 7, 4]'
         }
     });
 
@@ -68,14 +69,10 @@ if (subcommand === 'resolution') {
         }
     }
 
-    if (argv.zoombreaks) {
-        try {
-            zoombreaks = JSON.parse(argv.zoombreaks);
-        } catch(err) {
-            returnError(err);
-        }
-    } else {
-        zoombreaks = [13, 10, 7, 4];
+    try {
+        zoombreaks = JSON.parse(argv.zoombreaks);
+    } catch(err) {
+        returnError(err);
     }
 
     try {
