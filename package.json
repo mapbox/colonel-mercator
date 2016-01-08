@@ -13,7 +13,7 @@
     "colonel-mercator": "./bin/colonel-mercator"
   },
   "dependencies": {
-    "mapnik-omnivore": "^6.4.0",
+    "mapnik-omnivore": "git://github.com/mapbox/mapnik-omnivore.git#resolution-solution",
     "minimist": "^1.1.0",
     "split": "^0.3.3"
   },
