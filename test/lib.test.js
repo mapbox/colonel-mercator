@@ -42,10 +42,10 @@ tape('[LIB - get resolution] Test gets correct resolution, snaps up', function(a
         }
     }
     var maxRes = 0;
-    var snapping = 0;
+    var snapping = 1;
     merc_res.get_resolution(metadata, maxRes, snapping, function(err, res) {
         assert.error(err);
-        assert.deepLooseEqual(res, [ 4.777312278847559, 4.777312278847559 ]);
+        assert.deepLooseEqual(res, [ 4.777312278747559, 4.777312278747559 ]);
         assert.end();
     });
 });
