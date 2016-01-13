@@ -1,6 +1,15 @@
 #!/usr/bin/env node
 
-var argv = require('minimist')(process.argv.slice(2));
+var argv = require('minimist')(
+    process.argv.slice(2),
+    {
+        'default': {
+            snap: false,
+            maxres: 0,
+            upzoom: 3,
+            zoombreaks: '[13, 10, 7, 4]'
+        }
+    });
 
 var colonel_mercator = require('..'),
     path = require('path');
@@ -25,22 +34,23 @@ if (subcommand === 'resolution') {
         filepath = path.resolve(argv._[1]);
     }
 
-    if (!argv.snap) {
-        snap = false
-    } else if (argv.snap === true || argv.snap === false) {
-        snap = argv.snap;
-    } else {
-        returnError('--snap is a flag')
-    }
-
-    if (argv.maxres) {
+    if (argv.snap !== false) {
         try {
-            maxres = parseFloat(argv.maxres)
+            snap = parseFloat(argv.snap)
+            if (isNaN(snap) || snap < 0 || snap > 1) {
+                returnError('Snap must be a number between 1 and 0')
+            }
         } catch(err) {
             returnError(err);
         }
     } else {
-        maxres = 0;
+        snap = argv.snap
+    }
+
+    try {
+        maxres = parseFloat(argv.maxres);
+    } catch(err) {
+        returnError(err);
     }
 
     colonel_mercator.drill_raster(filepath, maxres, snap, function(err, pixel) {
@@ -59,29 +69,21 @@ if (subcommand === 'resolution') {
         }
     }
 
-        if (argv.zoombreaks) {
-        try {
-            zoombreaks = JSON.parse(argv.zoombreaks);
-        } catch(err) {
-            returnError(err);
-        }
-    } else {
-        zoombreaks = [13, 10, 7, 4];
+    try {
+        zoombreaks = JSON.parse(argv.zoombreaks);
+    } catch(err) {
+        returnError(err);
     }
 
-    if (argv.upzoom) {
-        try {
-            upzoom = parseInt(argv.upzoom)
-        } catch(err) {
-            returnError(err);
-        }
-    } else {
-        upzoom = 3;
+    try {
+        upzoom = parseInt(argv.upzoom)
+    } catch(err) {
+        returnError(err);
     }
 
     colonel_mercator.get_scene_zoom(res, zoombreaks, upzoom, function(err, metatileZoom) {
         if (err) returnError(err);
-        console.log(JSON.stringify(metatileZoom));
+        process.stdout.write(JSON.stringify(metatileZoom));
     });
 }
 

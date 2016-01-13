@@ -1,6 +1,6 @@
 {
   "name": "colonel-mercator",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "main": "./index",
   "engines": {
     "node": "0.10.33"
@@ -13,7 +13,7 @@
     "colonel-mercator": "./bin/colonel-mercator"
   },
   "dependencies": {
-    "mapnik-omnivore": "^6.4.0",
+    "mapnik-omnivore": "^7.0.0",
     "minimist": "^1.1.0",
     "split": "^0.3.3"
   },
