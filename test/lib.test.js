@@ -50,6 +50,23 @@ tape('[LIB - get resolution] Test gets correct resolution, snaps up', function(a
     });
 });
 
+
+tape('[LIB - get resolution] Test gets correct above highest cellsize, snaps', function(assert) {
+    var metadata = {
+        projection: '+proj=utm +zone=10 +datum=WGS84 +units=m +no_defs',
+        raster: {
+            pixelSize: [0.001, 0.001]
+        }
+    }
+    var maxRes = 0;
+    var snapping = 0.5;
+    merc_res.get_resolution(metadata, maxRes, snapping, function(err, res) {
+        assert.error(err);
+        assert.deepLooseEqual(res, [5, 5])
+        assert.end();
+    });
+});
+
 tape('[LIB - get metatile] Test gets correct metatile z', function(assert) {
     var resolution = 2.4;
     var breakzooms = [4, 7, 10, 13];
