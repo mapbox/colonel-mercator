@@ -84,7 +84,7 @@ tape('[CLI - resolution (4326)] Test gets correct resolution, snaps down with 0.
 tape('[CLI - resolution (4326)] Test gets correct resolution, snaps down with 0.5 threshold (finer resolution)', function(assert) {
     exec('node bin/colonel-mercator resolution test/fixtures/hires-mini.tif --snap 0.5', function(err, stdout, stderr) {
         assert.error(err, 'Should not error');
-        assert.looseEquals(stdout, 0.2985820174217224);
+        assert.looseEquals(stdout, 0.0746455043554306);
         assert.end();
     })
 });
@@ -92,7 +92,7 @@ tape('[CLI - resolution (4326)] Test gets correct resolution, snaps down with 0.
 tape('[CLI - metatile] Test gets correct metatile zoom', function(assert) {
     exec('node bin/colonel-mercator metatile 3.003153153153153', function(err, stdout, stderr) {
         assert.error(err, 'Should not error');
-        assert.deepLooseEqual(JSON.parse(stdout), JSON.parse('{"z":10,"thresh":19.109249114990234}'));
+        assert.deepLooseEqual(JSON.parse(stdout), JSON.parse('{"z":10,"thresh":19.109249114990234,"breakZ":13}'));
         assert.end();
     })
 });
@@ -100,7 +100,7 @@ tape('[CLI - metatile] Test gets correct metatile zoom', function(assert) {
 tape('[CLI - metatile] Test gets correct metatile zoom w/ diff upzoom', function(assert) {
     exec('node bin/colonel-mercator metatile 3.003153153153153 --upzoom 6', function(err, stdout, stderr) {
         assert.error(err, 'Should not error');
-        assert.deepLooseEqual(JSON.parse(stdout), JSON.parse('{"z":7,"thresh":19.109249114990234}'));
+        assert.deepLooseEqual(JSON.parse(stdout), JSON.parse('{"z":7,"thresh":19.109249114990234,"breakZ":13}'));
         assert.end();
     })
 });
@@ -108,7 +108,7 @@ tape('[CLI - metatile] Test gets correct metatile zoom w/ diff upzoom', function
 tape('[CLI - metatile] Test respects correct zoombreaks', function(assert) {
     exec('node bin/colonel-mercator metatile 3.003153153153153 --zoombreaks "[4, 7, 10, 13]"', function(err, stdout, stderr) {
         assert.error(err, 'Should not error');
-        assert.deepLooseEqual(JSON.parse(stdout), JSON.parse('{"z":10,"thresh":19.109249114990234}'));
+        assert.deepLooseEqual(JSON.parse(stdout), JSON.parse('{"z":10,"thresh":19.109249114990234,"breakZ":13}'));
         assert.end()
     })
 });
@@ -116,7 +116,7 @@ tape('[CLI - metatile] Test respects correct zoombreaks', function(assert) {
 tape('[CLI - metatile] Test respects zoombreaks in any order', function(assert) {
     exec('node bin/colonel-mercator metatile 3.003153153153153 --zoombreaks "[7, 4, 13, 10]"', function(err, stdout, stderr) {
         assert.error(err, 'Should not error');
-        assert.deepLooseEqual(JSON.parse(stdout), JSON.parse('{"z":10,"thresh":19.109249114990234}'));
+        assert.deepLooseEqual(JSON.parse(stdout), JSON.parse('{"z":10,"thresh":19.109249114990234,"breakZ":13}'));
         assert.end();
     })
 });
