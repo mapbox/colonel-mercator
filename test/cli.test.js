@@ -121,6 +121,14 @@ tape('[CLI - metatile] Test respects zoombreaks in any order', function(assert) 
     })
 });
 
+tape('[CLI - metatile] should metatile very high zooms to 16', function(assert) {
+    exec('node bin/colonel-mercator metatile 0.2 --zoombreaks "[4, 7, 10, 13, 16]"', function(err, stdout, stderr) {
+        assert.error(err, 'Should not error');
+        assert.deepLooseEqual(JSON.parse(stdout), JSON.parse('{"breakZ": 19,"thresh":0.2985820174217224,"z":16}'));
+        assert.end();
+    })
+});
+
 tape('[CLI - err] Test should error if no subcommand', function(assert) {
     exec('node bin/colonel-mercator test/fixtures/tiny-utm.tif', function(err, stdout, stderr) {
         assert.equals(err.code, 1)

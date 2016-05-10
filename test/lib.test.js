@@ -89,6 +89,17 @@ tape('[LIB - get metatile] does not go over avail zooms', function(assert) {
     });
 });
 
+tape('[LIB - get metatile] gets higher zooms', function(assert) {
+    var resolution = 0.05;
+    var breakzooms = [4, 7, 10, 13, 16];
+    var upzoom = 5;
+    merc_res.metatile_size(resolution, breakzooms, upzoom, function(err, metatile) {
+        assert.error(err);
+        assert.deepLooseEqual(metatile, { breakZ: 21, thresh: 0.0746455043554306, z: 16 })
+        assert.end();
+    });
+});
+
 tape('[LIB - get metatile] Throws error if no breakzooms', function(assert) {
     var resolution = 2.4;
     var breakzooms = [];
