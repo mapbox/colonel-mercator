@@ -62,7 +62,7 @@ tape('[LIB - get resolution] Test gets correct above highest cellsize, snaps', f
     var snapping = 0.5;
     merc_res.get_resolution(metadata, maxRes, snapping, function(err, res) {
         assert.error(err);
-        assert.deepLooseEqual(res, [ 0.2985820174217224, 0.2985820174217224 ])
+        assert.deepLooseEqual(res, [ 0.0746455043554306, 0.0746455043554306 ])
         assert.end();
     });
 });
@@ -73,7 +73,7 @@ tape('[LIB - get metatile] Test gets correct metatile z', function(assert) {
     var upzoom = 3;
     merc_res.metatile_size(resolution, breakzooms, upzoom, function(err, metatile) {
         assert.error(err);
-        assert.deepLooseEqual(metatile, { thresh: 19.109249114990234, z: 10 });
+        assert.deepLooseEqual(metatile, { breakZ: 13, thresh: 19.109249114990234, z: 10 });
         assert.end();
     });
 });
@@ -84,7 +84,18 @@ tape('[LIB - get metatile] does not go over avail zooms', function(assert) {
     var upzoom = 10;
     merc_res.metatile_size(resolution, breakzooms, upzoom, function(err, metatile) {
         assert.error(err);
-        assert.deepLooseEqual(metatile, { thresh: 0.2985820174217224, z: 13 })
+        assert.deepLooseEqual(metatile, { breakZ: 20, thresh: 0.1492910087108612, z: 10 })
+        assert.end();
+    });
+});
+
+tape('[LIB - get metatile] gets higher zooms', function(assert) {
+    var resolution = 0.05;
+    var breakzooms = [4, 7, 10, 13, 16];
+    var upzoom = 5;
+    merc_res.metatile_size(resolution, breakzooms, upzoom, function(err, metatile) {
+        assert.error(err);
+        assert.deepLooseEqual(metatile, { breakZ: 21, thresh: 0.0746455043554306, z: 16 })
         assert.end();
     });
 });
@@ -105,7 +116,7 @@ tape('[LIB - get metatile] if over min threshold, return min zoom', function(ass
     var upzoom = 3;
     merc_res.metatile_size(resolution, breakzooms, upzoom, function(err, metatile) {
         assert.error(err);
-        assert.deepLooseEqual(metatile, { thresh: 1222.991943359375, z: 4 })
+        assert.deepLooseEqual(metatile, { breakZ: 7, thresh: 1222.991943359375, z: 4 })
         assert.end();
     });
 });
