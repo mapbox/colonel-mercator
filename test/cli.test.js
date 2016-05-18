@@ -81,10 +81,10 @@ tape('[CLI - resolution (4326)] Test gets correct resolution, snaps down with 0.
     })
 });
 
-tape('[CLI - resolution (4326)] Test gets correct resolution, snaps down with 0.5 threshold (finer resolution)', function(assert) {
+tape('[CLI - resolution (4326)] Test gets correct resolution, snaps down with 0.5 threshold (finest resolution)', function(assert) {
     exec('node bin/colonel-mercator resolution test/fixtures/hires-mini.tif --snap 0.5', function(err, stdout, stderr) {
         assert.error(err, 'Should not error');
-        assert.looseEquals(stdout, 0.0746455043554306);
+        assert.looseEquals(stdout, 0.0373227521777153);
         assert.end();
     })
 });
