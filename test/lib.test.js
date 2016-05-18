@@ -62,7 +62,7 @@ tape('[LIB - get resolution] Test gets correct above highest cellsize, snaps', f
     var snapping = 0.5;
     merc_res.get_resolution(metadata, maxRes, snapping, function(err, res) {
         assert.error(err);
-        assert.deepLooseEqual(res, [ 0.0746455043554306, 0.0746455043554306 ])
+        assert.deepLooseEqual(res, [ 0.0373227521777153, 0.0373227521777153 ])
         assert.end();
     });
 });
