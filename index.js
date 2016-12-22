@@ -1,4 +1,4 @@
-var mapnikOmnivore = require('mapnik-omnivore'),
+var mapnikOmnivore = require('@mapbox/mapnik-omnivore'),
     path = require('path'),
     mercRes = require('./lib/merc_res');
 
@@ -22,5 +22,5 @@ function get_scene_zoom(res, zoombreaks, upzoom, callback) {
     mercRes.metatile_size(res, zoombreaks, upzoom, function(err, metatileZoom) {
         if (err) callback(err);
         return callback(null, metatileZoom);
-    })
+    });
 }

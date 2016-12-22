@@ -14,7 +14,7 @@
     "colonel-mercator": "./bin/colonel-mercator"
   },
   "dependencies": {
-    "mapnik-omnivore": "^8.1.0",
+    "@mapbox/mapnik-omnivore": "^8.2.0",
     "minimist": "^1.1.0",
     "split": "^0.3.3"
   },
