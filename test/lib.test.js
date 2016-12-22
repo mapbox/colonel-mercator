@@ -18,6 +18,22 @@ tape('[LIB - get resolution] Test gets correct resolution', function(assert) {
     });
 });
 
+tape('[LIB - get resolution] Test gets correct resolution, ft', function(assert) {
+    var metadata = {
+        projection: '+proj=lcc +lat_1=41.7 +lat_2=40.43333333333333 +lat_0=39.66666666666666 +lon_0=-82.5 +x_0=600000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=us-ft +no_defs',
+        raster: {
+            pixelSize: [0.101599998984, 0.101599998984]
+        }
+    }
+    var maxRes = 0;
+    var snapping = false;
+    merc_res.get_resolution(metadata, maxRes, snapping, function(err, res) {
+        assert.error(err);
+        assert.deepLooseEqual(res, [0.101599998984, 0.101599998984]);
+        assert.end();
+    });
+});
+
 tape('[LIB - get resolution] Test gets correct resolution, respects maxres', function(assert) {
     var metadata = {
         projection: '+proj=utm +zone=10 +datum=WGS84 +units=m +no_defs',
