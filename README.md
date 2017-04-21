@@ -1,4 +1,4 @@
-# colonel-mercator
+# @mapbox/colonel-mercator
 
 [![Build Status](https://travis-ci.org/mapbox/colonel-mercator.svg)](https://travis-ci.org/mapbox/colonel-mercator)[![Coverage Status](https://coveralls.io/repos/mapbox/colonel-mercator/badge.svg?branch=master&service=github)](https://coveralls.io/github/mapbox/colonel-mercator?branch=master)
 
