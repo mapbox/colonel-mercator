@@ -1,5 +1,5 @@
 {
-  "name": "colonel-mercator",
+  "name": "@mapbox/colonel-mercator",
   "version": "1.0.0",
   "main": "./index",
   "engines": {
@@ -14,7 +14,7 @@
     "colonel-mercator": "./bin/colonel-mercator"
   },
   "dependencies": {
-    "@mapbox/mapnik-omnivore": "^8.2.0",
+    "@mapbox/mapnik-omnivore": "~8.4.0",
     "minimist": "^1.1.0",
     "split": "^0.3.3"
   },
